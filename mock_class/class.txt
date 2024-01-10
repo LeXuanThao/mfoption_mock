@@ -1,0 +1,70 @@
+@startuml
+
+class User {
+  - userId
+  - name
+  - email
+}
+
+class Stock {
+  - symbol
+  - name
+  - price
+  - quantity
+}
+
+class OptionSymbol {
+  - symbol
+  - name
+  - price
+  - quantity
+}
+
+class Option {
+  - symbol
+  - baseSymbol
+  - name
+  - price
+  - quantity
+  - optionType
+  - stockId
+  - expiration
+}
+
+class Order {
+  - orderId
+  - userId
+  - symbol
+  - orderType
+  - quantity
+  - price
+}
+
+class Payment {
+  - paymentId
+  - orderId
+  - userId
+  - amount
+  - timestamp
+}
+
+class PricingManager {
+  - prices: dict
+}
+
+class OptionPricing {
+  - symbol
+  - price
+  - expiration
+  - volatility
+}
+
+User "1" --> "*" Order: has
+Stock "1" --> "*" Order: contains
+OptionSymbol "1" --> "*" Option: defines
+Order "1" --> "*" Payment: relates
+User "1" --> "*" Payment: makes
+Option "1" --> "*" OptionPricing: references
+Stock "1" --> "0..*" OptionSymbol: has
+OptionSymbol "1" --> "*" Option: defines
+@enduml
